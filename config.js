@@ -43,17 +43,18 @@ environments.set('staging', 'staging') // staging server
 environments.set('production', 'production') // production
 
 // store data to S3 with this key
+// NOTE: should we store each fragment w/ a consistent size?
 exports.createS3Key = function (schema, event) {
   const now = new Date()
   return [
     schema,
     event,
-    now.getUTCFullYear(),
-    now.getUTCMonth() + 1,
-    now.getUTCDate(),
-    now.getUTCHours(),
-    now.getUTCMinutes(),
-    now.getUTCSeconds(),
+    now.getUTCFullYear(), // YYYY
+    now.getUTCMonth() + 1, // MM
+    now.getUTCDate(), // DD
+    now.getUTCHours(), // HH
+    now.getUTCMinutes(), // MM
+    now.getUTCSeconds(), // SS
   ].join('/') + random() + '.json'
 }
 
