@@ -1,0 +1,60 @@
+#!/usr/bin/iojs
+'use strict'
+
+const knox = require('knox')
+
+/**
+ * Copy all the data in S3 buckets to Redshift.
+ * Loads data from the previous hour,
+ * so you are expected to run this every hour!
+ */
+
+const combinations = require('../lib/buffers').combinations
+const copy = require('../lib/copy')
+const config = require('../config')
+
+const s3 = knox.createClient(config)
+
+// date prefix for an hour ago
+const hourAgo = Date.now() - 60 * 60 * 1000
+const dateSuffix = [
+  hourAgo.getUTCFullYear(), // YYYY
+  hourAgo.getUTCMonth() + 1, // MM
+  hourAgo.getUTCDate(), // DD
+  hourAgo.getUTCHours(), // HH
+].join('/') + '/'
+
+// issue all the copy commands
+Promise.all(combinations.map(function (pair) {
+  return copyFiles(pair[0], pair[1])
+})).then(function () {
+  console.log('Files copied successfully!')
+  process.exit()
+}).catch(function (err) {
+  console.error('Files failed to copy!')
+  console.error(err.stack)
+  process.exit(1)
+})
+
+// copy files to redshift iff keys exists
+function copyFiles(schema, event) {
+  const prefix = schema + '/' + event + '/' + dateSuffix
+  return keysExists(prefix).then(function (exists) {
+    if (exists) return copy(schema, event, prefix)
+  }).catch(config.onError)
+}
+
+// check if there's at least 1 file with this prefix
+// otherwise, don't bother issueing a COPY command to redshift
+function keysExists(prefix) {
+  return new Promise(function (resolve, reject) {
+    s3.list({
+      prefix: prefix,
+      'max-keys': 1,
+    }, function (err, data) {
+      if (err) return reject(err)
+
+      Promise.resolve(!!data.Contents.length)
+    })
+  })
+}
