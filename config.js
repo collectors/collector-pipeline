@@ -64,6 +64,7 @@ exports.onFlush = function (key) {
 }
 
 // log any errors that occur
+/* istanbul ignore next */
 exports.onError = function (err) {
   console.error(err.stack)
 }
