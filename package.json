@@ -15,7 +15,7 @@
     "uid-safe": "^1.1.0"
   },
   "devDependencies": {
-    "istanbul-harmony": "0",
+    "babel-istanbul": "0",
     "mocha": "2",
     "standardberry": "*",
     "supertest": "^0.15.0"
@@ -23,8 +23,8 @@
   "scripts": {
     "lint": "standardberry lib bin/www bin/copy",
     "test": "mocha",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
-    "test-ci": "npm run lint && istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
+    "test-cov": "babel-istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
+    "test-ci": "npm run lint && babel-istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
   },
   "keywords": [
     "collector",
