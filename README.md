@@ -2,12 +2,19 @@
 # collector-pipeline
 
 [![NPM version][npm-image]][npm-url]
-[![Latest tag][github-tag]][github-url]
 [![Build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![Dependency Status][david-image]][david-url]
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
+
+Experimental data pipeline.
+
+1. POST `/:environment/track`
+2. Format data
+3. Buffer to the local file system
+4. POST to S3
+5. Copy into Amazon Redshift
 
 [npm-image]: https://img.shields.io/npm/v/collector-pipeline.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/collector-pipeline
