@@ -59,8 +59,8 @@ exports.createS3Key = function (schema, event) {
 }
 
 // log or store keys that are written
-exports.onFlush = function (key) {
-  console.log('saved: ' + key)
+exports.onFlush = function (schema, event, key) {
+  console.log('saved: %s/%s/%s', schema, event, key)
 }
 
 // log any errors that occur
