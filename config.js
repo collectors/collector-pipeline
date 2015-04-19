@@ -11,15 +11,15 @@ exports.trust = function () {
 }
 
 // s3-buffer-stream options
-exports.key = process.env.AWS_ACCESS_KEY_ID
-exports.secret = process.env.AWS_SECRET_ACCESS_KEY
-exports.bucket = process.env.BUCKET
+exports.key = process.env.COLLECTOR_PIPELINE_AWS_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID
+exports.secret = process.env.COLLECTOR_PIPELINE_AWS_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY
+exports.bucket = process.env.COLLECTOR_PIPELINE_BUCKET || process.env.BUCKET
 
 // redshift URI
 exports.redshift_uri = process.env.REDSHIFT_URI
 
 // interval between flushes
-exports.interval = 60 * 1000
+exports.interval = parseInt(process.env.COLLECTOR_PIPELINE_INTERVAL || 60 * 1000)
 
 // list of supported events
 const events = exports.events = new Set()

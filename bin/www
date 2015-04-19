@@ -1,0 +1,16 @@
+#!/usr/bin/iojs
+'use strict'
+
+const http = require('http')
+
+const fn = require('..')
+
+const port = process.env.PORT || 3100
+const start = Date.now()
+
+module.exports = http.createServer(fn).listen(port, function (err) {
+  if (err) throw err
+
+  console.log('Collector Pipeline: listening on port %s.', port)
+  console.log('Collector Pipeline: started in %sms.', Date.now() - start)
+})
