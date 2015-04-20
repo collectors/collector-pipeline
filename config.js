@@ -49,18 +49,17 @@ exports.createS3Key = function (schema, event) {
   return [
     schema,
     event,
-    now.getUTCFullYear(), // YYYY
-    now.getUTCMonth() + 1, // MM
-    now.getUTCDate(), // DD
-    now.getUTCHours(), // HH
-    now.getUTCMinutes(), // MM
-    now.getUTCSeconds(), // SS
+    now.getUTCFullYear(),
+    now.getUTCMonth() + 1,
+    now.getUTCDate(),
+    now.getUTCHours(),
+    now.getUTCMinutes(),
   ].join('/') + random() + '.json'
 }
 
 // log or store keys that are written
 exports.onFlush = function (schema, event, key) {
-  console.log('saved: %s/%s/%s', schema, event, key)
+  console.log('saved: s3://:bucket/%s', key)
 }
 
 // log any errors that occur
