@@ -14,7 +14,7 @@
     "pg": "^4.3.0",
     "pg-then": "^0.2.0",
     "s3-buffer-stream": "^1.0.1",
-    "uid-safe": "^2.0.0"
+    "uid-safe": "^2.1.0"
   },
   "devDependencies": {
     "babel-istanbul": "0",
