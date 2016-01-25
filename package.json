@@ -19,7 +19,7 @@
   "devDependencies": {
     "babel-istanbul": "0",
     "mocha": "2",
-    "mz": "^1.3.0",
+    "mz": "^2.2.0",
     "standardberry": "*",
     "supertest": "^1.0.1"
   },
